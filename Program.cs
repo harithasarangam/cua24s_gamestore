@@ -1,4 +1,5 @@
 using GameStore.Services;
+using Microsoft.ApplicationInsights;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,8 @@ builder.Services.AddSingleton<GameService>();
 builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
+var telemetryClient = app.Services.GetRequiredService<TelemetryClient>();
+telemetryClient.TrackTrace("🚀 Application has started!");
 
 // Konfigurera HTTP-anrop
 if (app.Environment.IsDevelopment())
